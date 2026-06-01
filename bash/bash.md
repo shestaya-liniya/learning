@@ -94,6 +94,14 @@ Then it can be readed by $[N] variable, $0 is a script name, $1 is a fisrt argum
 
     echo $1 $2 $3 # foo bar baz
 
+Variable `$?` has the value which is the exit code of the previous command
+
+    echo hello
+    echo $? 
+
+    # output
+    hello
+    0
 
 ## LOOP
 
