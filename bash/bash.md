@@ -2,8 +2,8 @@
 
 `ls` : print files
 
-    ls -R : recursively print files
-    ls -a : show all (hidden too) files
+    ls -R # recursively print files
+    ls -a # show all (hidden too) files
 
 `cd` : change directory
 
@@ -11,18 +11,18 @@
 
 `grep`, `rg` : find by symbol
 
-    rg -A1 : show 1 line above match
-    rg -B1 : show 1 line before match
-    rg -C1 : show 1 line above and before match (C for context)
-    rg -i : case insensitive
-    rg -o : print only the part that matched
+    rg -A1 # show 1 line above match
+    rg -B1 # show 1 line before match
+    rg -C1 # show 1 line above and before match (C for context)
+    rg -i # case insensitive
+    rg -o # print only the part that matched
 
 `less` : file/output pager
 
     less file.txt
-    alias | les :  execute command alias and pipe its output as the input of less
+    alias | les #  execute command alias and pipe its output as the input of less
 
-    N for going to the next search match, Shift-N for going to prev match
+Shortcuts: N for going to the next search match, Shift-N for going to prev match
 
 `man` : command manual
 
@@ -31,10 +31,10 @@
 `type` : print the type of a command
     
     type ls
-    type -a ls : print all types of a command
+    type -a ls # print all types of a command
 
-    For example the command 'echo' is a shell built-in and also an external programm, so 'type -a' helps finding approriate documentation.
-    For echo the documentation can be queried by 'man echo' and 'help echo' in bash or in a zsh builtins manual by 'man zshbuiltins'
+For example the command `echo` is a shell built-in and also an external programm, so `type -a` helps finding approriate documentation.
+For echo the documentation can be queried by `man echo` and `help echo` in bash
 
 `file` : determine file type
 
@@ -42,7 +42,7 @@
 
 `tr` : translate characters, replace symbol 'a' by symbol 'b'
 
-    `echo $PATH | tr : '\n'` replace symbol ':' by a symbol '\n'
+    `echo $PATH | tr : '\n' # replace symbol ':' by a symbol '\n'
 
 # SHELL OPERATORS
 
@@ -56,7 +56,7 @@
 
 `|` : pipe the data (output) to the program
 
-    cat file.txt | grep apple :  print the content of file.txt, send it as an input of the grep command where it should find the word "apple"
+    cat file.txt | grep apple # print the content of file.txt, send it as an input of the grep command where it should find the word "apple"
 
 
 
@@ -71,7 +71,7 @@ To mark the file as bash executable it is required to add a header with a specif
 
 `read` : read a line from stdin
 
-    read -p "Enter your name: " name : print prompt and assign input to the variable "name"
+    read -p "Enter your name: " name # print prompt and assign input to the variable "name"
 
 
 ## VARIABLES
@@ -136,4 +136,4 @@ Variables in a function is assigned as a global variable, to avoid this the `loc
 
 
 
-
+    
