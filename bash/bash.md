@@ -7,7 +7,7 @@
 
 `cd` : change directory
 
-    cd - : move to the last opened directory
+    cd - # move to the last opened directory
 
 `grep`, `rg` : find by symbol
 
@@ -20,7 +20,7 @@
 `less` : file/output pager
 
     less file.txt
-    alias | les #  execute command alias and pipe its output as the input of less
+    alias | less #  execute command alias and pipe its output as the input of less
 
 Shortcuts: N for going to the next search match, Shift-N for going to prev match
 
@@ -44,15 +44,23 @@ For echo the documentation can be queried by `man echo` and `help echo` in bash
 
     `echo $PATH | tr : '\n' # replace symbol ':' by a symbol '\n'
 
+`test` : condition evaluation utility
+
+`sleep` : suspend execution
+
 # SHELL OPERATORS
 
-`>` : overwrite file by the output
+`>` : write to the file, overwrite by the output
 
     echo "hello" > file 
 
 `>>` : append the file by output
 
-    echo "hello" > file 
+    echo "hello" >> file 
+
+`<` : read from a file
+
+    echo < greeting.txt
 
 `|` : pipe the data (output) to the program
 
@@ -67,11 +75,25 @@ To mark the file as bash executable it is required to add a header with a specif
     !#/usr/bin/env bash
 
 
-### INPUT
+## INPUT
 
 `read` : read a line from stdin
 
-    read -p "Enter your name: " name # print prompt and assign input to the variable "name"
+    read -p -r "Enter your name: " name # print prompt and assign input to the variable "name", -r is for raw, do not parse special characters as backslaches
+
+## COMMANDS
+
+`exit` : alternative of `return` but outside of a function
+
+## OPERATORS
+
+`[]` or `[[]]` : test lexical expression 
+
+    if [[ $name == "john" ]] ...
+
+`(())` : test mathematical expression
+    
+    if (( $age > 18 )) ...
 
 
 ## VARIABLES
@@ -103,6 +125,11 @@ Variable `$?` has the value which is the exit code of the previous command
     hello
     0
 
+Variable `$@` is a list of passed arguments
+
+Variable `$#` is a number of passed arguments
+
+
 ## LOOP
 
     for thing in foo bar baz; do
@@ -120,8 +147,15 @@ Loop through all passed arguments to a script
         echo "$thing"
     done
 
+Generate mathematical progression
 
-# FUNCTIONS
+    max=5
+    for ((i = 0; i < max; i++)); do
+        echo "$i"
+    done
+    
+
+## FUNCTIONS
 
     greet() {
         local name=$1
@@ -129,11 +163,111 @@ Loop through all passed arguments to a script
         echo "Hello, $name"
     }
 
-Variables in a function is assigned as a global variable, to avoid this the `local` keyword is needed
+Variables in a function are assigned as global variables, to avoid this the `local` keyword is used
 
 
+## CONDITIONS
 
+Expression between `[]` is the same as the command `test`, `[[]]` - is a bash enhanced version  that brings a bit more feature
 
+    a=2
+    b=2
 
+    if [[ $a == $b ]]; then       # could be `if test $a == $b; then
+        echo "a is equal to b"
+    fi
 
+    while [[ $a == $b ]]; do     
+        echo "a is equal to b"
+    done
     
+Boolean is `true` or `false`
+
+    true
+    echo $? # 0
+
+    false
+    echo $? # 1
+
+
+### CASE STATEMENT
+
+    case "$name" in
+        john)
+            echo "hi john"
+            ;;
+        dave)
+            echo "hi dave"
+            ;;
+        *)
+            echo "hello anyway"
+    esac
+    
+    # compact 
+    case "$name" in
+        john) echo "hi john";;
+        dave) echo "hi dave";;
+        *) echo "hello anyway"
+    esac
+    
+Case statement operators:
+`;;` : break
+`;&` : always fallthrough, when the condition is true, all next branches will be automatically true
+
+    case "$true_value" in
+        true)
+            echo "the value is true" ;&
+        false)
+            echo "the value is false" ;&
+
+    # output
+    the value is true
+    the value is false
+
+`;;&` : if true, continue but do not set next branches automatically true
+
+
+    case "$true_value" in
+        true)
+            echo "the value is true" ;;&
+        false)
+            echo "the value is false" ;;&
+        true)
+            echo "the value is true" ;;&
+
+    # output
+    the value is true
+    the value is true
+
+## DATA STRUCTURES
+
+### ARRAY
+
+    array=(foo bar baz)
+    echo "${array[0]}" # foo
+    echo "${array[-1]}" # baz
+
+    idx = 2
+    echo "${array[idx]}"
+
+Iterating through items
+
+    for item in "${array[@]}"; do
+        echo "$item"
+    done
+
+Manually declaring an array
+
+    declare -a array=(foo bar baz)
+    
+Copying
+
+    array_1 = (foo bar baz)
+    array_2 = ( "${array_1[@]}" )
+
+Pushing
+
+    array = (foo bar baz)
+    array+=(guy john)
+
+
